@@ -1,97 +1,78 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1020">
   <title>ItzThienBao</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div id="bg"></div>
+  <canvas id="fx"></canvas>
 
-  <!-- Background Video -->
-  <video class="bg-video" autoplay muted loop playsinline>
-    <source src="img/bg.mp4" type="video/mp4" />
-  </video>
+  <main class="stage">
+    <section class="card" id="card">
+      <div class="avatar-wrap">
+        <span class="ring glow"></span>
+        <span class="ring"></span>
+        <img id="avatar" class="avatar" alt="Avatar">
+      </div>
 
-  <!-- Cursor Trail Canvas -->
-  <canvas id="trailCanvas"></canvas>
+      <h1 id="name" class="name"></h1>
+      <p class="bio"><span id="typed"></span><i class="caret"></i></p>
 
-  <div class="card">
-
-    <!-- Avatar -->
-    <div class="avatar-wrap">
-      <img src="img/avt.jpg" alt="itzthienbao" class="avatar" />
-      <div class="avatar-ring"></div>
-    </div>
-
-    <!-- Tên + mô tả -->
-    <h1 class="name">ItzThienBao</h1>
-    <p class="bio"></p>
-    <p class="note"></p>
-
-    <!-- Like button -->
-    <div class="stats-wrap">
-      <div class="like-wrap">
-        <button class="like-btn" id="likeBtn" type="button">
-          <i class="fas fa-heart"></i>
+      <div class="stats">
+        <button id="likeBtn" class="stat like" type="button" aria-label="Thích">
+          <span data-icon="heart"></span><b id="likes">0</b>
         </button>
-        <span class="like-count" id="likeCount">—</span>
+        <span class="stat"><span data-icon="eye"></span><b id="views">0</b></span>
       </div>
-      <div class="divider-v"></div>
-      <div class="views-wrap">
-        <i class="fas fa-eye views-icon"></i>
-        <span class="views-count" id="viewCount">—</span>
-      </div>
-    </div>
 
-    <!-- Divider -->
-    <div class="divider"></div>
+      <nav class="links" id="links"></nav>
+    </section>
+  </main>
 
-    <!-- Liên hệ -->
-    <div class="contact-links" id="contactLinks">
-      <!-- Được render bởi script.js từ contact.js -->
-    </div>
-
-  </div>
-
-  <!-- Music Player -->
-  <div class="player" id="player">
-    <button class="player-toggle" id="playerToggle" type="button" title="Ẩn/hiện player">
-      <i class="fas fa-music" style="color:var(--accent);font-size:0.8rem"></i>
-      <span class="player-toggle-label">MUSIC</span>
-      <span class="player-now-playing" id="nowPlayingLabel">—</span>
-      <i class="fas fa-chevron-down"></i>
+  <aside class="player" id="player">
+    <button class="p-head" id="pToggle" type="button" aria-expanded="true">
+      <span class="p-label"><span data-icon="music"></span>MUSIC</span>
+      <span class="p-mini" id="pMini">—</span>
+      <span class="p-chev" data-icon="chevron"></span>
     </button>
-    <div class="player-body" id="playerBody">
-      <div class="player-info">
-        <div class="player-title" id="playerTitle">—</div>
-        <div class="player-artist" id="playerArtist">—</div>
-      </div>
-      <div class="player-progress-wrap">
-        <span class="player-time" id="currentTime">0:00</span>
-        <input type="range" class="player-progress" id="progressBar" value="0" min="0" step="0.1" />
-        <span class="player-time" id="totalTime">0:00</span>
-      </div>
-      <div class="player-controls">
-        <button class="p-btn" id="prevBtn" type="button" title="Bài trước"><i class="fas fa-backward-step"></i></button>
-        <button class="p-btn p-play" id="playBtn" type="button" title="Play/Pause"><i class="fas fa-play"></i></button>
-        <button class="p-btn" id="nextBtn" type="button" title="Bài tiếp"><i class="fas fa-forward-step"></i></button>
-        <button class="p-btn p-small" id="shuffleBtn" type="button" title="Shuffle"><i class="fas fa-shuffle"></i></button>
-        <button class="p-btn p-small" id="repeatBtn" type="button" title="Lặp lại"><i class="fas fa-repeat"></i></button>
-        <div class="volume-wrap">
-          <i class="fas fa-volume-low vol-icon"></i>
-          <input type="range" class="volume-bar" id="volumeBar" value="80" min="0" max="100" />
+    <div class="p-body">
+      <div class="p-inner">
+        <div class="p-info">
+          <div class="eq" id="eq"><i></i><i></i><i></i><i></i></div>
+          <div class="p-text">
+            <div class="p-title" id="pTitle">—</div>
+            <div class="p-artist" id="pArtist">—</div>
+          </div>
+        </div>
+        <div class="p-seek">
+          <span id="pCur">0:00</span>
+          <input id="pSeek" class="range" type="range" min="0" max="1000" value="0" aria-label="Tua nhạc">
+          <span id="pDur">0:00</span>
+        </div>
+        <div class="p-ctrl">
+          <button id="pPrev" class="ib" type="button" aria-label="Bài trước" data-icon="prev"></button>
+          <button id="pPlay" class="play" type="button" aria-label="Phát / Tạm dừng" data-icon="play"></button>
+          <button id="pNext" class="ib" type="button" aria-label="Bài sau" data-icon="next"></button>
+          <button id="pShuffle" class="ib" type="button" aria-label="Ngẫu nhiên" data-icon="shuffle"></button>
+          <button id="pRepeat" class="ib" type="button" aria-label="Lặp lại một bài" data-icon="repeat"></button>
+          <span class="p-vol">
+            <span data-icon="volume"></span>
+            <input id="pVol" class="range" type="range" min="0" max="100" value="60" aria-label="Âm lượng">
+          </span>
         </div>
       </div>
     </div>
-  </div>
+  </aside>
 
-  <audio id="audio"></audio>
+  <div class="toast" id="toast" role="status"></div>
 
-  <script src="config.js"></script>
-  <script src="contact.js"></script>
-  <script src="songs.js"></script>
   <script src="script.js"></script>
-  </body>
+</body>
 </html>

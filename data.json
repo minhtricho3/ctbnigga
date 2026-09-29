@@ -1,0 +1,38 @@
+{
+  "name": "ItzThienBao",
+  "bio": [
+    "Minecraft player",
+    "Web dev",
+    "Chill & code"
+  ],
+  "avatar": "assets/avatar.png",
+  "background": "assets/background.jpg",
+  "links": [
+    {
+      "id": "facebook",
+      "label": "Facebook",
+      "type": "link",
+      "url": "https://facebook.com/your.profile"
+    },
+    {
+      "id": "discord",
+      "label": "Discord",
+      "type": "copy",
+      "value": "itzthienbao"
+    },
+    {
+      "id": "zalo",
+      "label": "Zalo",
+      "type": "copy",
+      "value": "0900000000"
+    }
+  ],
+  "playlist": [
+    {
+      "title": "Mơ màng",
+      "artist": "hoo - Thanh Luân",
+      "src": "assets/music/mo-mang.mp3"
+    }
+  ],
+  "volume": 0.6
+}
